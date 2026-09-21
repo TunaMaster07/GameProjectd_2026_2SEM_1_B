@@ -72,15 +72,28 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime)
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
+        if (controller.isGrounded && verticalVelocity < 0f)
+        {
+            verticalVelocity = -2f;
+        }
+        else
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+        }
 
+        controller.Move(Vector3.up * verticalVelocity * Time.deltaTime);
 
+        float animationspeed = 0f;
 
+        if (moveDirection.sqrMagnitude > 0.001f)
+        {
+            animationspeed = isRunn ? 1f : 0.5f;
+        }
 
-
-
+        animator.SetFloat("speed", animationspeed, 0.1f, Time.deltaTime);
     }
 
 

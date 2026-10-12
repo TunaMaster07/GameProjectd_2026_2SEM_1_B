@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public enum PlayerState
 {
     Normal,
-    pickUp,
+    Pickup,
 }
 
 [RequireComponent(typeof(CharacterController))]

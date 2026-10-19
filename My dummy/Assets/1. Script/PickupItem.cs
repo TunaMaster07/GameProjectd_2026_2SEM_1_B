@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class PickupItem : MonoBehaviour
 {
-    [Header("¾ÆÀÌÅÛ Á¤º¸")]
-    [SerializeField] private string itemName = "¾ÆÀÌÅÛ";
+    [Header("ì•„ì´í…œ ì •ë³´")]
+    [SerializeField] private string itemName = "ì•„ì´í…œ";
     [SerializeField] private int amount = 1;
+    [SerializeField] private QuestManager questManager;
 
-
-    [Header("È­¸é ¿¬Ãâ")]
+    [Header("í™”ë©´ ì—°ì¶œ")]
     [SerializeField] private float rotationSpeed = 60f;
-    [SerializeField] private float floatingHeight = 0.15f;
+    [SerializeField] private float floatingHeight = 0.1f;
     [SerializeField] private float floatingSpeed = 2f;
+
+    private void Awake()
+    {
+        questManager = FindAnyObjectByType<QuestManager>();
+    }
 
     private Vector3 startPosition;
 
@@ -23,19 +28,18 @@ public class PickupItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        // ¾ÆÀÌÅÛ È¸Àü \
-
+        // ì•„ì´í…œì„ ì²œì²œíˆ íšŒì „ì‹œí‚¨ë‹¤.
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
 
-        // ¾ÆÀÌÅÛ À§¾Æ·¡ ¿òÁ÷ÀÓ
-        float y = Mathf.Sin(Time.time * floatingSpeed) * floatingHeight;
+        // ì•„ì´í…œì„ ìœ„ì•„ë˜ë¡œ ì›€ì§ì¸ë‹¤.
+        float y = Mathf.Sign(Time.time * floatingSpeed) * floatingHeight;
         transform.position = startPosition + Vector3.up * y;
     }
 
     public void Collect()
     {
-        Debug.Log(itemName + " " + amount + "°³ È¹µæ");
+        Debug.Log(itemName + " " + amount + "ê°œ íšë“");
+        questManager.AddQuestItem(itemName, amount);        // ì¶”ê°€
         Destroy(gameObject);
     }
 

@@ -103,7 +103,7 @@ public class SimpleInventory : MonoBehaviour
         }
     }
 
-    public bool AddItem(string itemName, int amount)
+    public bool AddItem(string itemName, int amount, string description)
     {
         foreach (InventoryItem item in items)                    //Slot을 순환하면서 아이템 이름이 같은 것이 있을 경우 수량을 + 해준다.
         {
